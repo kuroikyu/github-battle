@@ -1,6 +1,32 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 
+const PlayerPreview = (props) => (
+  <div> 
+    <div className="column">
+      <img 
+        src={props.avatar} 
+        alt={`Avatar for ${props.userName}`} 
+        className="avatar"
+      />
+      <h2 className="username">@{props.userName}</h2>
+    </div>
+    <button 
+      className="reset"
+      onClick={props.onReset.bind(null, props.id)}
+    >
+    Reset
+    </button>
+  </div>
+)
+
+PlayerPreview.propTypes = {
+  avatar: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  onReset: PropTypes.func.isRequired,
+}
+
 class PlayerInput extends React.Component {
   constructor(props) {
     super(props);
@@ -85,6 +111,8 @@ class Battle extends React.Component {
   render() {
     const playerOneName = this.state.playerOneName;
     const playerTwoName = this.state.playerTwoName;
+    const playerOneImage = this.state.playerOneImage;
+    const playerTwoImage = this.state.playerTwoImage;
     
     return(
       <div>
@@ -97,6 +125,17 @@ class Battle extends React.Component {
               onSubmit = {this.handleSubmit}
             />
           }
+
+          {
+            playerOneImage !== null &&
+              <PlayerPreview 
+                avatar={playerOneImage}
+                userName={playerOneName}
+                onReset={this.handleReset}
+                id='playerOne'
+              />
+          }
+
           {
             !playerTwoName &&
             <PlayerInput 
@@ -104,6 +143,16 @@ class Battle extends React.Component {
               label = 'Player Two'
               onSubmit = {this.handleSubmit}
             />
+          }
+
+          {
+            playerTwoImage !== null &&
+              <PlayerPreview 
+                avatar={playerTwoImage}
+                userName={playerTwoName}
+                onReset={this.handleReset}
+                id='playerTwo'
+              />
           }
         </div>
       </div>
