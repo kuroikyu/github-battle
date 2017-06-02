@@ -1,5 +1,6 @@
 const React = require('react');
 const PropTypes = require('prop-types');
+const { Link } = require('react-router-dom');
 
 const PlayerPreview = (props) => (
   <div> 
@@ -98,6 +99,8 @@ class Battle extends React.Component {
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleReset = this.handleReset.bind(this);
+    
   }
 
   handleSubmit(id, userName) {
@@ -108,7 +111,18 @@ class Battle extends React.Component {
       return newState;
     })
   }
+
+  handleReset(id) {
+    this.setState(() => {
+      let newState = {};
+      newState[`${id}Name`] = '';
+      newState[`${id}Image`] = null;
+      return newState;
+    })
+  }
+
   render() {
+    const match = this.props.match;
     const playerOneName = this.state.playerOneName;
     const playerTwoName = this.state.playerTwoName;
     const playerOneImage = this.state.playerOneImage;
@@ -127,7 +141,7 @@ class Battle extends React.Component {
           }
 
           {
-            playerOneImage !== null &&
+            playerOneImage &&
               <PlayerPreview 
                 avatar={playerOneImage}
                 userName={playerOneName}
@@ -146,7 +160,7 @@ class Battle extends React.Component {
           }
 
           {
-            playerTwoImage !== null &&
+            playerTwoImage &&
               <PlayerPreview 
                 avatar={playerTwoImage}
                 userName={playerTwoName}
@@ -155,6 +169,18 @@ class Battle extends React.Component {
               />
           }
         </div>
+        {
+          playerOneImage && playerTwoImage &&
+          <Link
+            className='button'
+            to={{
+              pathname: `${match.url}/results`,
+              search: `?playerOneName=${playerOneName}&playerTwoName=${playerTwoName}`
+            }}
+          >
+          Battle
+          </Link>
+        }
       </div>
     )
   }

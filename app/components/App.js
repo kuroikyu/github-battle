@@ -8,7 +8,9 @@ const {
 const Nav = require('./Nav');
 const Home = require('./Home');
 const Battle = require('./Battle');
+const Results = require('./Results');
 const Popular = require('./Popular');
+
 
 class App extends React.Component {
   render() {
@@ -19,6 +21,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path='/' component={Home}/>
             <Route exact path='/battle' component={Battle}/>
+            <Route path='/battle/results' component={Results}/>
             <Route path='/popular' component={Popular}/>
             <Route render={() => <p>Not Found</p>}/>
           </Switch>
