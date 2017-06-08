@@ -1,13 +1,12 @@
 const axios = require('axios');
 
 const getProfile = (username) => {
-  return axios.get(`https://api.github.com/users/$(username)`)
+  return axios.get(`https://api.github.com/users/${username}`)
     .then((user) => user.data);
 }
 
 const getRepos = (username) => {
-  return axios.get(`https://api.github.com/users/$(username)/repos?per_page=100`)
-    // .then((user) => user.data);
+  return axios.get(`https://api.github.com/users/${username}/repos?per_page=100`)
 }
 
 const getStarCount = (repos) => {
